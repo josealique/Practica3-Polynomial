@@ -61,4 +61,38 @@ public class Polynomial {
         }
         return s.toString();
     }
+
+    private String getCoeffs() {
+        StringBuilder coso = new StringBuilder();
+        for (int i = 0; i < this.coeficientes.length; i++) {
+            int coeff = Math.round(this.coeficientes[i]);
+
+            if (i == this.coeficientes.length - 1) {
+                coso.append(coeff);
+                continue;
+            }
+            int power = getPower(i);
+
+            if (power == 1) {
+                coso.append(coeff == 1 ? "x " : coeff + "x ");
+            } else {
+                coso.append(coeff == 1 ? "x^" + ++power + " " : coeff + "x^" + ++power + " ");
+                i += power - 2;
+            }
+            if (i + 1 <= this.coeficientes.length - 1) {
+                float next = this.coeficientes[i + 1];
+                coso.append(next > 0 ? "+ " : "- ");
+                this.coeficientes[i + 1] = next < 0 ? next * -1 : next;
+            }
+        }
+        return coso.toString();
+    }
+
+    private int getPower(int idx) {
+        int counter = 0;
+        do {
+            counter++;
+        } while (this.coeficientes[++idx] == 0);
+        return counter;
+    }
 }
