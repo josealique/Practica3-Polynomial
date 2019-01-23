@@ -1,5 +1,6 @@
 public class Polynomial {
     private float[] coeficientes;
+    private String string;
 
     // Constructor per defecte. Genera un polinomi zero
     public Polynomial() {
@@ -16,6 +17,10 @@ public class Polynomial {
 
     // Constructor a partir d'un string
     public Polynomial(String s) {
+        String[] componentes = s.split(" ");
+
+        this.string = s;
+        this.coeficientes = new float[]{0};
     }
 
     // Suma el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
@@ -49,50 +54,16 @@ public class Polynomial {
     // Torna la representació en forma de String del polinomi. Override d'un mètode de la classe Object
     @Override
     public String toString() {
+        StringBuilder s = new StringBuilder();
         if (coeficientes[0] == 0) return "" + Math.round(coeficientes[0]);
         if (coeficientes[0] == 1) return "x + " + Math.round(coeficientes[1]);
-        StringBuilder s = new StringBuilder(Math.round(coeficientes[0]) + "x^" + Math.round(coeficientes[1]));
-        for (int i = Math.round(coeficientes[0]) - 1; i >= 0; i--) {
-            if (coeficientes[i] == 0) continue;
-            else if (coeficientes[i] > 0) s.append(" + ").append(coeficientes[i]);
-            else if (coeficientes[i] < 0) s.append(" - ").append(-coeficientes[i]);
-            if (i == 1) s.append("x");
-            else if (i >  1) s.append("x^").append(i);
+        for (int i = 0; i < coeficientes.length; i++) {
+            int number = Math.round(coeficientes[i]);
+            if (number == 0) continue;
+            if (number > 0) s.append(number);
+            if (number < 0) s.append(number + "-");
         }
         return s.toString();
     }
 
-    private String getCoeffs() {
-        StringBuilder coso = new StringBuilder();
-        for (int i = 0; i < this.coeficientes.length; i++) {
-            int coeff = Math.round(this.coeficientes[i]);
-
-            if (i == this.coeficientes.length - 1) {
-                coso.append(coeff);
-                continue;
-            }
-            int power = getPower(i);
-
-            if (power == 1) {
-                coso.append(coeff == 1 ? "x " : coeff + "x ");
-            } else {
-                coso.append(coeff == 1 ? "x^" + ++power + " " : coeff + "x^" + ++power + " ");
-                i += power - 2;
-            }
-            if (i + 1 <= this.coeficientes.length - 1) {
-                float next = this.coeficientes[i + 1];
-                coso.append(next > 0 ? "+ " : "- ");
-                this.coeficientes[i + 1] = next < 0 ? next * -1 : next;
-            }
-        }
-        return coso.toString();
-    }
-
-    private int getPower(int idx) {
-        int counter = 0;
-        do {
-            counter++;
-        } while (this.coeficientes[++idx] == 0);
-        return counter;
-    }
 }
