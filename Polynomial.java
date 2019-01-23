@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Polynomial {
     private float[] coeficientes;
     private String string;
@@ -17,10 +19,13 @@ public class Polynomial {
 
     // Constructor a partir d'un string
     public Polynomial(String s) {
-        String[] componentes = s.split(" ");
-
-        this.string = s;
         this.coeficientes = new float[]{0};
+        String[] componentes = s.split(" ");
+        for (int i = 0; i < componentes.length; i++) {
+            if (componentes[i].contains("x")){
+
+            }
+        }
     }
 
     // Suma el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
@@ -60,8 +65,8 @@ public class Polynomial {
         for (int i = 0; i < coeficientes.length; i++) {
             int number = Math.round(coeficientes[i]);
             if (number == 0) continue;
-            if (number > 0) s.append(number);
-            if (number < 0) s.append(number + "-");
+            if (number > 0) s.append(" + ");
+            s.append(number);
         }
         return s.toString();
     }
