@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Polynomial {
     private float[] coeficientes;
     private String poly;
@@ -17,32 +19,26 @@ public class Polynomial {
     // Constructor a partir d'un string
     public Polynomial(String s) {
         this.coeficientes = new float[]{0};
-        this.poly = s;
+       String[] componentes = s.split(" ");
+       String resultado = "";
+        for (int i = 0; i < componentes.length; i++) {
+            if (componentes[i].contains("x")){
+                String[] a = componentes[i].split("x");
+                resultado += Arrays.toString(a) + "x";
+            }
+            if (componentes[i].contains("x^")){
+                int potencia = Integer.parseInt(componentes[i].split("x\\^")[1]);
+                resultado += potencia;
+                System.out.println(resultado);
+            }
+        }
     }
 
     // Suma el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
     public Polynomial add(Polynomial p) {
-        Polynomial polynomial = p;
-        Polynomial polynomial1 = this;
-        for (int i = 0; i < coeficientes.length; i++) {
-
-        }
-        return null;
-    }
-
-    // Multiplica el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
-    public Polynomial mult(Polynomial p2) {
-        return null;
-    }
-
-    // Divideix el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
-    // Torna el quocient i també el residu (ambdós polinomis)
-    public Polynomial[] div(Polynomial p2) {
-        return null;
-    }
-
-    // Troba les arrels del polinomi, ordenades de menor a major
-    public float[] roots() {
+        float[] p1;
+        float[] p2;
+        float[] resultado;
         return null;
     }
 
@@ -64,7 +60,7 @@ public class Polynomial {
                 coso.append(coeff);
                 continue;
             }
-            int power = getPower(i);
+            int power = getDegree(i);
             if (power == 1) {
                 coso.append(coeff == 1 ? "x " : coeff + "x ");
             } else {
@@ -91,7 +87,7 @@ public class Polynomial {
         return empty;
     }
 
-    private int getPower(int idx) {
+    private int getDegree(int idx) {
         int counter = 0;
         do {
             counter++;
@@ -99,3 +95,21 @@ public class Polynomial {
         return counter;
     }
 }
+
+/*
+   // Multiplica el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
+    public Polynomial mult(Polynomial p2) {
+        return null;
+    }
+
+    // Divideix el polinomi amb un altre. No modifica el polinomi actual (this). Genera un de nou
+    // Torna el quocient i també el residu (ambdós polinomis)
+    public Polynomial[] div(Polynomial p2) {
+        return null;
+    }
+
+    // Troba les arrels del polinomi, ordenades de menor a major
+    public float[] roots() {
+        return null;
+    }
+ */
